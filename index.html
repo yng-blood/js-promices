@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promises Async Await</title>
+</head>
+
+<body>
+    <h3>Q:1) Write one example explaining how you can write a callback function.</h3>
+    <pre>
+        function sum(a, b){
+            return a + b;
+          }
+          function detail(name, sum){
+            console.log(`${name} ${sum}`);
+          }
+          
+          detail("Result", sum(10,20))
+    </pre> Output:- Result 30</p>
+    <h3>Q:2) "Write a callback function to print numbers from 1 to 7, in which 1 should be printed after 1 sec, 2 should be printed after 2 sec, 3 should be printed after 3 sec, and so on. Explain callback hell. Numbers 1 2 3 4 5 6 7"
+    </h3>
+    <p style="color:green">Callback Hell: Callback Hell is essentially nested callbacks stacked below one another forming a pyramid structure. Every callback depends/waits for the previous callback, thereby making a pyramid structure that affects the readability and maintainability
+        of the code. </p>
+    <pre>
+        setTimeout(() => {
+            let count=1;
+              console.log(count++);
+              setTimeout(() => {
+                console.log(count++);
+                setTimeout(() => {
+                  console.log(count++);
+                    setTimeout(() => {
+                      console.log(count++);
+                        setTimeout(() =>{
+                          console.log(count++);
+                            setTimeout(() =>{
+                              console.log(count++);
+                                setTimeout(() =>{
+                                  console.log(count++);
+                                },7000)
+                            },6000)
+                        },5000)
+                    },4000);
+                },3000);
+            },2000);
+          },1000);
+    </pre> Output:- </p>
+    <p>1 (after 1 sec)</p>
+    <p>2 (after 2 sec)</p>
+    <p>3 (after 3 sec)</p>
+    <p>4 (after 4 sec)</p>
+    <p>5 (after 5 sec)</p>
+    <p>6 (after 6 sec)</p>
+    <p>7 (after 7 sec)</p>
+
+    <h3>Q:3) "Write the promise function to print numbers from 1 to 7, in which 1 should be printed after 1 sec, 2 should be printed after 2 sec, 3 should be printed after 3 sec, and so on. Numbers 1 2 3 4 5 6 7"
+    </h3>
+    <pre>
+      const printNumberPromise = ms => new Promise(resolve => setTimeout(resolve, ms)); 
+      let chain = Promise.resolve(); 
+      for (let count = 1; count <= 7; count++) { 
+        chain = chain.then(() => { 
+          console.log(count); 
+          return printNumberPromise(count*1000); 
+        }); 
+      }
+    </pre> Output:- </p>
+    <p>1 (after 1 sec)</p>
+    <p>2 (after 2 sec)</p>
+    <p>3 (after 3 sec)</p>
+    <p>4 (after 4 sec)</p>
+    <p>5 (after 5 sec)</p>
+    <p>6 (after 6 sec)</p>
+    <p>7 (after 7 sec)</p>
+    <h3>Q:4) "Create a promise function accepting an argument, if yes is passed to the function then it should go to resolved state and print Promise Resolved, and if nothing is passed then it should go to reject the state and catch the error and print Promise
+        Rejected " </h3>
+    <pre>
+        const promise = new Promise(function(res,rej){
+            let result="";
+            if(result == "yes"){
+              res("promise resolved");
+            }
+            else{
+              rej("promise rejected");
+            }
+          })
+          
+          promise.then(function(data){
+            console.log(data);
+          }).catch(function(err){
+            console.log("Error",err);
+          })
+    </pre> Output:-Error promise rejected </p>
+    <h3>Q:5) Create examples to explain callback function</h3>
+    <pre>
+        
+          // Main function
+          const mainFunction = (callback) => {
+            setTimeout(() => {
+              callback([2, 3, 4]);
+            }, 2000)
+          }
+  
+          // Add function
+          const add = (array) => {
+            let sum = 0;
+            for(let i of array) {
+              sum += i;
+            }
+            console.log(sum);
+          }
+  
+          // Calling main function
+        mainFunction(add);
+    </pre> Output:- 9</p>
+    <h3>Q:6) Create examples to explain callback hell function</h3>
+    <p style="color:green">Callback Hell: Callback Hell is essentially nested callbacks stacked below one another forming a pyramid structure. Every callback depends/waits for the previous callback, thereby making a pyramid structure that affects the readability and maintainability
+        of the code. </p>
+    <pre>
+      setTimeout(() => {
+        console.log("Hey,")
+        setTimeout(() => {
+          console.log("have");
+          setTimeout(() =>{
+            console.log("a");
+            setTimeout(() => {
+              console.log("nice");
+              setTimeout(() =>{
+                console.log("day");
+              },5000)
+            },4000)
+          },3000)
+        },2000)
+      },1000)
+    </pre> Output:- </p>
+    <p>Hey (after 1 sec)</p>
+    <p>have (after 2 sec)</p>
+    <p>a (after 3 sec)</p>
+    <p>nice (after 4 sec)</p>
+    <p>day (after 5 sec)</p>
+
+    <h3>Q:7) Create examples to explain promises function</h3>
+    Ans:-Below code shows how to check whether a number is odd or even using promise function</p>
+    <pre>
+        const promise = new Promise(function(res,rej){
+            let num=7;
+            if(num%2 == 0){
+              res("its even");
+            }
+            else{
+              rej("its not even");
+            }
+          })
+          
+          promise.then(function(data){
+            console.log(data);
+          }).catch(function(err){
+            console.log("Error",err);
+          })
+    </pre> Output:- Error its not even</p>
+    <h3>Q:8) Create examples to explain async await function</h3>
+    The async function declaration declares an async function where the await keyword is permitted within the function body. The async and await keywords enable asynchronous, promise-based behavior to be written in a cleaner style, avoiding the need to explicitly
+    configure promise chains.</p>
+    <pre>
+      function resolveAfter2Seconds() {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve('resolved');
+          }, 2000);
+        });
+      }
+      
+      async function asyncCall() {
+        console.log('calling');
+        const result = await resolveAfter2Seconds();
+        console.log(result);
+        
+      }
+      
+      asyncCall();
+    </pre> const promise1 = Promise.resolve(3); const promise2 = 42; const promise3 = new Promise((resolve, reject) => { setTimeout(resolve, 100, 'foo'); }); Promise.all([promise1, promise2, promise3]).then((values) => { console.log(values); });
+    </pre>
+    Output:- Array [3, 42, "foo"] </p>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
